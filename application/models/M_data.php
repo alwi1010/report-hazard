@@ -15,8 +15,8 @@ class M_data extends CI_Model{
 		}
 
 		public function save_history_data($datahistori,$table){
-			// return $this->db->insert($table,$datahistori);
-			return FALSE;
+			return $this->db->insert($table,$datahistori);
+			// return FALSE;
 		}
 
 	// End Input
