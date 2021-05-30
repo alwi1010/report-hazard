@@ -17,40 +17,37 @@ class Employee2 extends CI_Controller{
 	}
 
 
+
 	// Start Input
 
-		public function save_progress()
+		public function save_progress($problemId)
 		{
 			$this->load->model('m_data');
 
 			$idstatuslaporan = "1";
-			$dataidlaporan = $this->m_data->show_report_data()->row();
-			$idmasalah = $dataidlaporan->IdMasalah;
 
 			$dataprogress = array(
-			  'IdMasalah'=>$idmasalah,
+			  'IdMasalah'=>$problemId,
 			  'IdStatusLaporan'=>$idstatuslaporan,
 			  'TanggalProgress' =>date('Y-m-d'),
 			  'JamProgress' =>date('H:i:s')
 			);
 
 	    if (!$this->m_data->save_progress_data($dataprogress,'tbprogress')) {
-				$this->delete_report($idmasalah);
+				$this->delete_report($problemId);
 	    } else {
 				echo "<script type='text/javascript'>window.alert('Progress Berhasil Tersimpan.');</script>";
 	    }
 		}
 
-		public function save_history($uploadedImage){
+		public function save_history($uploadedImage,$problemId){
 			$this->load->model('m_data');
 
 			$idstatuslaporan = "1";
 			$keterangankegiatan = "Sedang Diperiksa Kevalidan Dari Datanya.";
-			$dataidlaporan = $this->m_data->show_report_data()->row();
-			$idmasalah = $dataidlaporan->IdMasalah;
 
 			$datahistori = array(
-		  	'IdMasalah'=>$idmasalah,
+		  	'IdMasalah'=>$problemId,
 			  'IdStatusLaporan'=>$idstatuslaporan,
 			  'FotoKegiatan' =>$uploadedImage,
 			  'KeteranganKegiatan' =>$keterangankegiatan,
@@ -59,27 +56,24 @@ class Employee2 extends CI_Controller{
 			);
 
 	    if (!$this->m_data->save_history_data($datahistori,'tbhistorilaporan')) {
-				$this->delete_progress($idmasalah);
-				$this->delete_report($idmasalah);
+				$this->delete_progress($problemId);
+				$this->delete_report($problemId);
 	    } else {
-				echo "<script type='text/javascript'>window.alert('Histori Berhasil Tersimpan.'); window.location='".base_url('')."';</script>";
+				echo "<script type='text/javascript'>window.alert('Histori Berhasil Tersimpan.');</script>";
 	    }
 		}
 
-		public function report_hazard()
-		{
+		public function report_hazard(){
 			$this->load->model('m_data');
 			$this->uploadPath = "asset/image_hazard/";
 			$data = array();
 			$reportStatus= "1";
 
-			if ($this->input->post())
-			{
+			if ($this->input->post()){
 				$p = $this->input->post();
 
-				if (empty($_FILES["photohazard"]['name']))
-				{
-					echo "<script type='text/javascript'>window.alert('Belum Ada Foto'); window.location'".base_url('employee/')."';</script>";
+				if (empty($_FILES["photohazard"]['name'])){
+					echo "<script type='text/javascript'>window.alert('Belum Ada Foto'); window.location'".base_url('employee2/')."';</script>";
 				}
 
 				$nameReporter = $this->security->xss_clean($p["namereporter"]);
@@ -95,8 +89,7 @@ class Employee2 extends CI_Controller{
 
 				$parts = preg_split("/(,?\s+)|((?<=[a-z])(?=\d))|((?<=\d)(?=[a-z]))/i", $nameReporter);
 
-				if (empty($nameReporter))
-				{
+				if (empty($nameReporter)){
 					$parts = preg_split("/(,?\s+)|((?<=[a-z])(?=\d))|((?<=\d)(?=[a-z]))/i", $nameUnit);
 				}
 				
@@ -124,20 +117,67 @@ class Employee2 extends CI_Controller{
 					);
 
 					if ($this->m_data->save_report_data($dataInput,'tbmasalah')) {
-						$this->save_progress();
-						$this->save_history($filenameUsed);
+						echo "<script type='text/javascript'>window.alert('Data Laporan Berhasil DiInput.');</script>";
+
+						$reportId = $this->m_data->show_report_data()->row();
+						$problemId = $reportId->IdMasalah;
+						$this->save_progress($problemId);
+						$this->save_history($filenameUsed,$problemId);
+
+						$config["upload_path"] = $this->uploadPath;
+						$config["allowed_types"] = "jpg|jpeg|png";
+						$config["file_name"] = $filenameUsed; // New name for the files.
+
+						$this->load->library("upload", $config);
+
+						// Upload / Save Files To Server
+						if ($this->upload->do_upload("photohazard")){
+							$this->load->library("image_lib");
+
+							$newWidth = $newHeight = 0;
+
+							$uploadData			= $this->upload->data();
+							$uploadedImage	= $uploadData["file_name"];
+							$uploadedWidth	= $uploadData["image_width"];
+							$uploadedHeight	= $uploadData["image_height"];
+							$sourcePath 		= $this->uploadPath.$uploadedImage;
+							$thumbPath			= $this->uploadPath.'thumb/'.$uploadedImage;
+
+							if ($uploadedWidth < $uploadedHeight){
+								$this->rotate_image($sourcePath);
+							}
+
+							$this->thumb_image($sourcePath,$thumbPath,$uploadedWidth,$uploadedHeight);
+
+							if ($uploadedWidth > 1500 OR $uploadedWidth < 1500){
+								$this->resize_image($sourcePath,$uploadedWidth,$uploadedHeight);
+							}
+
+							echo "<script type='text/javascript'>window.alert('Foto Berhasil Di Upload.');</script>";
+						} else {
+							// $this->upload->display_errors();
+							// die();
+							$this->delete_history($problemId);
+							$this->delete_progress($problemId);
+							$this->delete_report($problemId);
+
+							echo "<script type='text/javascript'>window.alert('Laporan Anda Gagal Tersimpan Dikarenakan Terjadi Kesalahan Pada Saat Upload Foto. Mohon Untuk Memeriksa Kembali Foto Anda Dan Dipersilahkan Untuk Menginputkannya Kembali!!!'); window.location='".base_url('employee2/')."';</script>";
+						}
+
+						echo "<script type='text/javascript'>window.alert('Laporan Anda Telah Berhasil Tersimpan. Jika Laporan Anda Telah Selesai Kami Akan Memberitau Anda Melalui Email Anda'); window.location='".base_url('')."';</script>";
 					} else {
-						echo "<script type='text/javascript'>window.alert('Laporan Anda Gagal Tersimpan. Mohon Untuk Menginputkannya Kembali!!!'); window.location='".base_url('')."';</script>";
+						echo "<script type='text/javascript'>window.alert('Laporan Anda Gagal Tersimpan. Mohon Untuk Menginputkannya Kembali!!!'); window.location='".base_url('employee2/')."';</script>";
 					}
 					
 				}
 
 			} else {
-				echo "<script type='text/javascript'>window.alert('Tidak Ada Data Yang Diinputkan'); window.location='".base_url('')."';</script>";
+				echo "<script type='text/javascript'>window.alert('Tidak Ada Data Yang Diinputkan'); window.location='".base_url('employee2/')."';</script>";
 			}
 		}
 
 	// End Input
+
 
 
 	// Start Edit
@@ -145,34 +185,39 @@ class Employee2 extends CI_Controller{
 	// End Edit
 
 
+
 	// Start Delete
 
-		public function delete_report($idmasalah){
-	    if (!$this->m_data->delete_report_data($idmasalah)) {
-				echo "<script type='text/javascript'>window.alert('Data Laporan Hazard Gagal Di Hapus.'); window.location='".base_url('employee/')."';</script>";
+		public function delete_report($problemId){
+			$this->load->model('m_data');
+	    if (!$this->m_data->delete_report_data($problemId)) {
+				echo "<script type='text/javascript'>window.alert('Data Laporan Hazard Gagal Di Hapus.'); window.location='".base_url('employee2/')."';</script>";
 	    } else {
 				echo "<script type='text/javascript'>window.alert('Data Laporan Hazard Berhasil Di Hapus.');</script>";
 	    }
 		}
 
-		public function delete_progress($idmasalah){
-	    if (!$this->m_data->delete_progress_data($idmasalah)) {
-				echo "<script type='text/javascript'>window.alert('Data Progress Hazard Gagal Di Hapus.'); window.location='".base_url('employee/')."';</script>";
+		public function delete_progress($problemId){
+			$this->load->model('m_data');
+	    if (!$this->m_data->delete_progress_data($problemId)) {
+				echo "<script type='text/javascript'>window.alert('Data Progress Hazard Gagal Di Hapus.'); window.location='".base_url('employee2/')."';</script>";
 	    } else {
-				echo "<script type='text/javascript'>window.alert('Data Progress Hazard Berhasil Di Hapus.'); window.location='".base_url('')."';</script>";
+				echo "<script type='text/javascript'>window.alert('Data Progress Hazard Berhasil Di Hapus.');</script>";
 	    }
 		}
 
 
-		public function delete_history($idmasalah){
-	    if (!$this->m_data->delete_history_data($idmasalah)) {
-				echo "<script type='text/javascript'>window.alert('Data Progress Hazard Gagal Di Hapus.'); window.location='".base_url('employee/')."';</script>";
+		public function delete_history($problemId){
+			$this->load->model('m_data');
+	    if (!$this->m_data->delete_history_data($problemId)) {
+				echo "<script type='text/javascript'>window.alert('Data Histori Hazard Gagal Di Hapus.'); window.location='".base_url('employee2/')."';</script>";
 	    } else {
-				echo "<script type='text/javascript'>window.alert('Data Progress Hazard Berhasil Di Hapus.'); window.location='".base_url('')."';</script>";
+				echo "<script type='text/javascript'>window.alert('Data Histori Hazard Berhasil Di Hapus.');</script>";
 	    }
 		}
 
 	// End Delete
+
 
 
 	// Start Show
@@ -191,6 +236,7 @@ class Employee2 extends CI_Controller{
 		}
 
 	// End Show
+
 
 
 	// Start Image
@@ -249,6 +295,7 @@ class Employee2 extends CI_Controller{
 		}
 
 	// End Image
+
 
 
 	// Start Email

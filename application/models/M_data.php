@@ -29,13 +29,18 @@ class M_data extends CI_Model{
 
 	// Start Delete
 
-		function delete_report_data($idmasalah){
-			$query = $this->db->query("DELETE FROM tbmasalah WHERE IdMasalah = '$idmasalah'");
+		function delete_report_data($problemId){
+			$query = $this->db->query("DELETE FROM tbmasalah WHERE IdMasalah = '$problemId'");
 			return $query;
 		}
 
-		function delete_progress_data($idmasalah){
-			$query = $this->db->query("DELETE FROM tbprogress WHERE IdMasalah = '$idmasalah'");
+		function delete_progress_data($problemId){
+			$query = $this->db->query("DELETE FROM tbprogress WHERE IdMasalah = '$problemId'");
+			return $query;
+		}
+
+		function delete_history_data($problemId){
+			$query = $this->db->query("DELETE FROM tbhistorilaporan WHERE IdMasalah = '$problemId'");
 			return $query;
 		}
 

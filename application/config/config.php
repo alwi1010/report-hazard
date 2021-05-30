@@ -25,9 +25,7 @@ date_default_timezone_set("Asia/Makassar");
 | a PHP script and you can easily do that on your own.
 |
 */
-// $config['base_url'] = 'http://localhost:7777/sipaperdone/';
-$config['base_url'] = 'http://192.168.43.238:7777/sipaperdone/';
-// $config['base_url'] = 'http://192.168.137.1:7777/sipaperdone/';
+$config['base_url'] = 'http://192.168.43.238:7777/sipaperdone1/';
 
 /*
 |--------------------------------------------------------------------------
