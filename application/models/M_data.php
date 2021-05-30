@@ -24,6 +24,10 @@ class M_data extends CI_Model{
 
 	// Start Edit
 
+		function update_queue_number($dataUpdate,$table){
+			$this->db->replace($table, $dataUpdate);
+		}
+
 	// End Edit
 
 
@@ -65,6 +69,15 @@ class M_data extends CI_Model{
 		public function show_report_data(){
 			return $selectdata = $this->db->select('IdMasalah')->order_by('IdMasalah',"desc")->limit(1)->get('tbmasalah');
 		}
+
+		public function show_email_admin(){
+			return $this->db->query("SELECT EmailAdmin FROM tbadmin")->result();
+			// return $this->db->get('tbadmin')->result();
+		}
+
+		// public function email_unitst($unit_st,$table){
+		// 	return $this->db->query("SELECT EmailUnit, NamaUnit FROM tbunitst WHERE IdUnitSt='$unit_st'")->row_array();
+		// }
 	
 	// End Show
 

@@ -116,6 +116,23 @@ class Employee2 extends CI_Controller{
 
 						$reportId = $this->m_data->show_report_data()->row();
 						$problemId = $reportId->IdMasalah;
+
+						$updateQueueNumber	= $queueNumber+1;
+						$dataUpdate					= array('NomorUrut' => $updateQueueNumber);
+
+						$this->m_data->update_queue_number($dataUpdate,'tbnorut');
+
+						$dataEmailAdmin = $this->m_data->show_email_admin();
+
+						foreach ($dataEmailAdmin as $adminEmail) {
+							if (count($dataEmailAdmin) === 1) {
+								$emailAdmin = $adminEmail->EmailAdmin;
+							} else {
+								$implode[]	= $adminEmail->EmailAdmin;
+								$emailAdmin = implode(', ', $implode);
+							}
+						}
+
 						$this->save_progress($problemId);
 						$this->save_history($filenameUsed,$problemId);
 
@@ -147,6 +164,9 @@ class Employee2 extends CI_Controller{
 							if ($uploadedWidth > 1500 OR $uploadedWidth < 1500){
 								$this->resize_image($sourcePath,$uploadedWidth,$uploadedHeight);
 							}
+
+							$this->send_email_to_admin($emailAdmin,$problemNumber);;
+							$this->send_email_to_employee($emailReporter,$nameReporter,$dateTime);
 						} else {
 							// $this->upload->display_errors();
 							// die();
@@ -289,46 +309,40 @@ class Employee2 extends CI_Controller{
 
 		public function send_email_to_admin($emailAdmin,$problemNumber){
 			$this->load->library('email');
-	    $data['nomasalah'] = $nomasalah;
+	    $data['problemNumber'] = $problemNumber;
 	    
 	    $from = $this->config->item('smtp_user');
-	    $to = $email_admin;
+	    $to = $emailAdmin;
 	    $subject = "Informasi Data Baru - PAPERDONE";
-	    $message = $this->load->view('template_email_admin', $data, true);
+	    $message = $this->load->view('template/template_email_admin', $data, true);
 
 	    $this->email->set_newline("\r\n");
-	    $this->email->from($from,'PAPERDONE');
+	    $this->email->from($from,"SIPAPERDONE");
 	    $this->email->to($to);
 	    $this->email->subject($subject);
 	    $this->email->message($message);
-
-	    if (!$this->email->send()) {
-	        echo "<script>window.alert('Gagal Mengirimkan Email Ke Admin!');</script>";
-	        // show_error($this->email->print_debugger());
-	    }
+			
+			$this->email->send();
 		}
 
 
-		public function send_email_to_employee($emailReporter,$dateTime){
+		public function send_email_to_employee($emailReporter,$nameReporter,$dateTime){
 			$this->load->library('email');
-	    $data['namapelapor'] = $namapelapor;
-	    $data['datetime'] = $datetime;
+	    $data['nameReporter'] = $nameReporter;
+	    $data['dateTime'] = $dateTime;
 	    
 	    $from = $this->config->item('smtp_user');
-	    $to = $emailpelapor;
+	    $to = $emailReporter;
 	    $subject = "PAPERDONE - I Gusti Ngurah Rai Bali";
-	    $message = $this->load->view('template_email_user', $data, true);
+	    $message = $this->load->view('template/template_email_employee', $data, true);
 
 	    $this->email->set_newline("\r\n");
-	    $this->email->from($from,'PAPERDONE');
+	    $this->email->from($from,"SIPAPERDONE");
 	    $this->email->to($to);
 	    $this->email->subject($subject);
 	    $this->email->message($message);
-
-	    if (!$this->email->send()) {
-	        echo "<script>window.alert('Gagal Mengirimkan Email Ke User!');</script>";
-	        // show_error($this->email->print_debugger());
-	    }
+			
+			$this->email->send();
 		}
 
 	// End Email
