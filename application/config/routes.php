@@ -57,8 +57,10 @@ $route['email'] = 'email controller/send';
 // Controller Routes
 
 $route['default_controller'] = 'employee2';
-$route['lapor-hazard'] = 'employee2';
+$route['form-report-hazard'] = 'employee2';
+$route['report-hazard'] = 'employee2/report_hazard';
 $route['login-admin'] = 'loginadminsystem';
+$route['check-login-admin'] = 'loginadminsystem/login_action';
 $route['admin'] = 'adminsystem';
 $route['login-admin-st'] = 'loginadminst';
 $route['admin-st'] = 'adminst';
