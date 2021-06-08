@@ -62,6 +62,7 @@ $route['report-hazard'] = 'employee2/report_hazard';
 $route['login-admin'] = 'loginadminsystem';
 $route['check-login-admin'] = 'loginadminsystem/login_action';
 $route['admin'] = 'adminsystem';
+$route['admin-logout'] = 'adminsystem/logout';
 $route['login-admin-st'] = 'loginadminst';
 $route['admin-st'] = 'adminst';
 $route['login-unit-st'] = 'loginunitst';

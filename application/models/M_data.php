@@ -19,6 +19,10 @@ class M_data extends CI_Model{
 			// return FALSE;
 		}
 
+		public function input_log($table,$log){
+			$this->db->insert($table,$log);
+		}
+
 	// End Input
 
 
@@ -75,9 +79,9 @@ class M_data extends CI_Model{
 			// return $this->db->get('tbadmin')->result();
 		}
 
-		// public function email_unitst($unit_st,$table){
-		// 	return $this->db->query("SELECT EmailUnit, NamaUnit FROM tbunitst WHERE IdUnitSt='$unit_st'")->row_array();
-		// }
+		public function check_email_admin($eas){
+		  return $this->db->query("SELECT IdAdmin, UsernameAdmin, PassAdmin FROM `tbadmin` WHERE EmailAdmin='$eas'")->row_array();
+		}
 	
 	// End Show
 

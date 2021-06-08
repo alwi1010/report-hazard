@@ -18,7 +18,7 @@
 			<div class="card" style="margin: 22.2% 0; background-color: #EDEDED;">
   			<div class="card-body">
   				<center style="margin-bottom: 25px;"><h5>SISTEM PELAPORAN HAZARD ONLINE</h5></center>
-					<form class="needs-validation" novalidate method="post" name="myForm" action="<?php echo base_url(). 'employee2/report_hazard'; ?>" enctype="multipart/form-data">
+					<form class="needs-validation" novalidate method="post" name="myForm" action="<?php echo base_url(). 'check-login-admin'; ?>" enctype="multipart/form-data">
 					  <div class="form-group" style="margin-bottom: 25px;">
 					    <label for="iea">Email address</label>
 					    <input type="email" class="form-control" id="iea" placeholder="Silahkan Masukkan Email Anda" name="emailadmin" required="" accesskey="e">
@@ -33,7 +33,7 @@
 				      	Silahkan Masukkan Password Anda Terlebih Dahulu
 				      </div>
 					  </div>
-					  <button type="submit" class="btn btn-primary" style="width: 100%;">Submit</button>
+					  <button type="submit" class="btn" style="background-color: green; color: white; width: 100%;">Submit</button>
 					</form>
 				</div>
 			</div>
