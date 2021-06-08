@@ -33,7 +33,7 @@
 			<div class="card" style="margin: 37px 0; background-color: #EDEDED">
   			<div class="card-body">
   				<center style="margin-bottom: 20px;"><h5>SISTEM PELAPORAN HAZARD ONLINE</h5></center>
-					<form class="needs-validation" novalidate method="post" name="myForm" action="<?php echo base_url(). 'employee2/report_hazard'; ?>" enctype="multipart/form-data">
+					<form class="needs-validation" novalidate method="post" name="myForm" action="<?php echo base_url(). 'report-hazard'; ?>" enctype="multipart/form-data">
 					  <div class="form-row">
 					    <div class="col-md-6 mb-3">
 					      <label for="nreporter"><b>Nama Lengkap</b></label>

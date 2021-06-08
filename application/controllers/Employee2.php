@@ -69,7 +69,7 @@ class Employee2 extends CI_Controller{
 				$p = $this->input->post();
 
 				if (empty($_FILES["photohazard"]['name'])){
-					echo "<script type='text/javascript'>window.alert('Belum Ada Foto'); window.location'".base_url('employee2/')."';</script>";
+					echo "<script type='text/javascript'>window.alert('Belum Ada Foto'); window.location'".base_url('form-report-hazard/')."';</script>";
 				}
 
 				$nameReporter = $this->security->xss_clean($p["namereporter"]);
@@ -174,18 +174,18 @@ class Employee2 extends CI_Controller{
 							$this->delete_progress($problemId);
 							$this->delete_report($problemId);
 
-							echo "<script type='text/javascript'>window.alert('Laporan Anda Gagal Tersimpan Dikarenakan Terjadi Kesalahan Pada Saat Upload Foto. Mohon Untuk Memeriksa Kembali Foto Anda Dan Dipersilahkan Untuk Menginputkannya Kembali!!!'); window.location='".base_url('')."';</script>";
+							echo "<script type='text/javascript'>window.alert('Laporan Anda Gagal Tersimpan Dikarenakan Terjadi Kesalahan Pada Saat Upload Foto. Mohon Untuk Memeriksa Kembali Foto Anda Dan Dipersilahkan Untuk Menginputkannya Kembali!!!'); window.location='".base_url('form-report-hazard/')."';</script>";
 						}
 
-						echo "<script type='text/javascript'>window.alert('Laporan Anda Telah Berhasil Tersimpan. Jika Laporan Anda Telah Selesai Kami Akan Memberitau Anda Melalui Email Anda'); window.location='".base_url('')."';</script>";
+						echo "<script type='text/javascript'>window.alert('Laporan Anda Telah Berhasil Tersimpan. Jika Laporan Anda Telah Selesai Kami Akan Memberitau Anda Melalui Email Anda'); window.location='".base_url('form-report-hazard/')."';</script>";
 					} else {
-						echo "<script type='text/javascript'>window.alert('Laporan Anda Gagal Tersimpan. Mohon Untuk Menginputkannya Kembali!!!'); window.location='".base_url('')."';</script>";
+						echo "<script type='text/javascript'>window.alert('Laporan Anda Gagal Tersimpan. Mohon Untuk Menginputkannya Kembali!!!'); window.location='".base_url('form-report-hazard/')."';</script>";
 					}
 					
 				}
 
 			} else {
-				echo "<script type='text/javascript'>window.alert('Tidak Ada Data Yang Diinputkan'); window.location='".base_url('')."';</script>";
+				echo "<script type='text/javascript'>window.alert('Tidak Ada Data Yang Diinputkan'); window.location='".base_url('form-report-hazard/')."';</script>";
 			}
 		}
 
@@ -204,14 +204,14 @@ class Employee2 extends CI_Controller{
 		public function delete_report($problemId){
 			$this->load->model('m_data');
 	    if (!$this->m_data->delete_report_data($problemId)) {
-				echo "<script type='text/javascript'>window.alert('Data Laporan Hazard Gagal Di Hapus.'); window.location='".base_url('')."';</script>";
+				echo "<script type='text/javascript'>window.alert('Data Laporan Hazard Gagal Di Hapus.'); window.location='".base_url('form-report-hazard/')."';</script>";
 	    }
 		}
 
 		public function delete_progress($problemId){
 			$this->load->model('m_data');
 	    if (!$this->m_data->delete_progress_data($problemId)) {
-				echo "<script type='text/javascript'>window.alert('Data Progress Hazard Gagal Di Hapus.'); window.location='".base_url('')."';</script>";
+				echo "<script type='text/javascript'>window.alert('Data Progress Hazard Gagal Di Hapus.'); window.location='".base_url('form-report-hazard/')."';</script>";
 	    }
 		}
 
@@ -219,7 +219,7 @@ class Employee2 extends CI_Controller{
 		public function delete_history($problemId){
 			$this->load->model('m_data');
 	    if (!$this->m_data->delete_history_data($problemId)) {
-				echo "<script type='text/javascript'>window.alert('Data Histori Hazard Gagal Di Hapus.'); window.location='".base_url('')."';</script>";
+				echo "<script type='text/javascript'>window.alert('Data Histori Hazard Gagal Di Hapus.'); window.location='".base_url('form-report-hazard/')."';</script>";
 	    }
 		}
 
