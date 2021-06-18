@@ -83,6 +83,16 @@ class M_data extends CI_Model{
 		  return $this->db->query("SELECT IdAdmin, UsernameAdmin, PassAdmin FROM `tbadmin` WHERE EmailAdmin='$eas'")->row_array();
 		}
 	
+		public function year_data_chart($month,$year)
+		{
+			return $query = $this->db->query("SELECT TanggalLaporan FROM tbmasalah WHERE MONTH(TanggalLaporan) = '$month' AND YEAR(TanggalLaporan) = '$year'")->num_rows();
+		}
+
+		public function month_week_data_chart($date,$month,$year)
+		{
+			return $query = $this->db->query("SELECT TanggalLaporan FROM tbmasalah WHERE DAY(TanggalLaporan) = '$date' AND MONTH(TanggalLaporan) = '$month' AND YEAR(TanggalLaporan) = '$year'")->num_rows();
+		}
+	
 	// End Show
 
 }

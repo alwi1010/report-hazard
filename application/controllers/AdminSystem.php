@@ -14,6 +14,7 @@ class AdminSystem extends CI_Controller{
 
 
 	public function index(){
+		$this->load->model('m_data');
 		$this->load->view('admin/dashboard');
 	}
 
