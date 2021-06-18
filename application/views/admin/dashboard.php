@@ -159,6 +159,7 @@
 		</aside>
 		<!-- End Main Sidebar Container -->
 
+		<!-- Start Content Wrapper -->
 		<div class="content-wrapper">
 			<!-- Main content -->
 			<section class="content">
@@ -211,6 +212,7 @@
 			</section>
 			<!-- /.content -->
 		</div>
+		<!-- End Content Wrapper -->
 
 		<?php $this->load->view("admin/_admin/footer.php") ?>
 	</div>
