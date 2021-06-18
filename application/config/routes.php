@@ -67,3 +67,4 @@ $route['login-admin-st'] = 'loginadminst';
 $route['admin-st'] = 'adminst';
 $route['login-unit-st'] = 'loginunitst';
 $route['unit-st'] = 'unitst';
+$route['show-data-dropdown'] = 'employee2/show_chained';

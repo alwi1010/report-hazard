@@ -137,7 +137,7 @@
 					var IdArea = $('#harea').val();
 					$.ajax({
 						type:'POST',
-						url: '<?php echo base_url('employee2/show_chained') ?>',
+						url: '<?php echo base_url('show-data-dropdown') ?>',
 						data: { 'id' : IdArea },
 						success: function(data) {
 							$("#hlocation").html(data);
