@@ -15,7 +15,22 @@ class AdminSystem extends CI_Controller{
 
 	public function index(){
 		$this->load->model('m_data');
-		$this->load->view('admin/dashboard');
+
+		$data['incoming_data'] = $this->m_data->incoming_problem_data();
+		$data['pending_data'] = $this->m_data->pending_problem_data();
+		$data['data_in_progress'] = $this->m_data->problem_data_in_progress();
+		$data['data_complete'] = $this->m_data->complete_problem_data();
+		$data['history_data'] = $this->m_data->history_problem_data();
+		$data['data_request'] = $this->m_data->data_request();
+
+		$this->load->view('admin/dashboard', $data);
+	}
+
+
+	public function incoming_data(){
+		$this->load->model('m_data');
+
+		$this->load->view('admin/incoming_problem_data');
 	}
 
 	// Lain Lain

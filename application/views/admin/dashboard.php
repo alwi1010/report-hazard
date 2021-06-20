@@ -98,37 +98,37 @@
 							</a>
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
-									<a href="<?php echo base_url('laporan-masuk-admin') ?>" class="nav-link">
+									<a href="<?php echo base_url('admin-data-in') ?>" class="nav-link">
 										<i class="far fa-circle nav-icon"></i>
 										<p>Laporan Masuk</p>
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href="<?php echo base_url('laporan-tertunda-admin') ?>" class="nav-link">
+									<a href="<?php echo base_url('admin-data-pending') ?>" class="nav-link">
 										<i class="far fa-circle nav-icon"></i>
 										<p>Laporan Tertunda</p>
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href="<?php echo base_url('laporan-tertunda-admin') ?>" class="nav-link">
+									<a href="<?php echo base_url('admin-progress-data') ?>" class="nav-link">
 										<i class="far fa-circle nav-icon"></i>
 										<p>Laporan Dikerjakan</p>
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href="<?php echo base_url('laporan-tertunda-admin') ?>" class="nav-link">
+									<a href="<?php echo base_url('admin-data-request') ?>" class="nav-link">
 										<i class="far fa-circle nav-icon"></i>
 										<p>Data Request</p>
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href="<?php echo base_url('laporan-tertunda-admin') ?>" class="nav-link">
+									<a href="<?php echo base_url('admin-data-complete') ?>" class="nav-link">
 										<i class="far fa-circle nav-icon"></i>
 										<p>Laporan Selesai</p>
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href="<?php echo base_url('laporan-tertunda-admin') ?>" class="nav-link">
+									<a href="<?php echo base_url('admin-history-data') ?>" class="nav-link">
 										<i class="far fa-circle nav-icon"></i>
 										<p>Histori Laporan</p>
 									</a>
@@ -161,13 +161,30 @@
 
 		<!-- Start Content Wrapper -->
 		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 class="m-0 text-dark">Admin : Dashboard</h1>
+						</div><!-- /.col -->
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item active">Dashboard</li>
+							</ol>
+						</div><!-- /.col -->
+					</div><!-- /.row -->
+				</div><!-- /.container-fluid -->
+			</div>
+			<!-- /.content-header -->
+
 			<!-- Main content -->
 			<section class="content">
 				<div class="container-fluid">
 					<!-- NEW LINE CHART -->
 					<div class="card card-info">
 						<div class="card-header">
-							<span class="card-title" style="font-size: 25px;">Line Chart</span>
+							<span class="card-title" style="font-size: 25px;">Chart Data Hazard</span>
 
 							<div class="card-tools">
 								<select class="form-control" id="periodedata">
@@ -209,6 +226,79 @@
 					<!-- /.card -->
 				</div>
 				<!-- /.container-fluid -->
+
+				<div class="container-fluid">
+					<!-- Small boxes (Stat box) -->
+					<div class="row">
+						<div class="col-lg-4 col-4">
+							<!-- small box -->
+							<div class="small-box bg-lime">
+								<div class="inner">
+									<h1 style="padding-top: 25px; padding-bottom: 10px;">Masuk (<?php echo count($incoming_data); ?>)</h1>
+								</div>
+								<div class="icon">
+									<i class="fas fa-fw fa-clipboard"></i>
+								</div>
+								<a href="<?php echo base_url('admin-data-in') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+						<!-- ./col -->
+						<div class="col-lg-4 col-4">
+							<!-- small box -->
+							<div class="small-box bg-warning">
+								<div class="inner">
+									<h1 style="padding-top: 25px; padding-bottom: 10px;">Tertunda (<?php echo count($pending_data); ?>)</h1>
+								</div>
+								<div class="icon">
+									<i class="fas fa-fw fa-hourglass-half"></i>
+								</div>
+								<a href="<?php echo base_url('admin-data-pending') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+						<!-- ./col -->
+						<div class="col-lg-4 col-4">
+							<!-- small box -->
+							<div class="small-box bg-primary">
+								<div class="inner">
+									<h1 style="padding-top: 25px; padding-bottom: 10px;">Dikerjakan (<?php echo count($data_in_progress); ?>)</h1>
+								</div>
+								<div class="icon">
+									<i class="fas fa-fw fa-tools"></i>
+								</div>
+								<a href="<?php echo base_url('admin-progress-data') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+						<!-- ./col -->
+						<div class="col-lg-6 col-6">
+							<!-- small box -->
+							<div class="small-box bg-success">
+								<div class="inner">
+									<h1 style="padding-top: 25px; padding-bottom: 10px;">Selesai (<?php echo count($data_complete); ?>)</h1>
+								</div>
+								<div class="icon">
+									<i class="fas fa-fw fa-flag-checkered"></i>
+								</div>
+								<a href="<?php echo base_url('admin-data-complete') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+						<!-- ./col -->
+						<div class="col-lg-6 col-6">
+							<!-- small box -->
+							<div class="small-box bg-info">
+								<div class="inner">
+									<h1 style="padding-top: 25px; padding-bottom: 10px;">Histori (<?php echo count($history_data); ?>)</h1>
+								</div>
+								<div class="icon">
+									<i class="fas fa-fw fa-history"></i>
+								</div>
+								<a href="<?php echo base_url('admin-history-data') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+						<!-- ./col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
 			</section>
 			<!-- /.content -->
 		</div>
@@ -224,47 +314,47 @@
 		$(document).ready(function() {
 			$('#periodedata').on('change', function() {
 				var idArea = $('#periodedata').val();
-				if (idArea == "mingguini") {
-					document.getElementById("mingguIni").style.display = "block";
-					document.getElementById("mingguLalu").style.display = "none";
-					document.getElementById("bulanIni").style.display = "none";
-					document.getElementById("bulanLalu").style.display = "none";
-					document.getElementById("tahunIni").style.display = "none";
-					document.getElementById("periode").style.display = "block";
-				} else if (idArea == "minggulalu") {
-					document.getElementById("mingguIni").style.display = "none";
-					document.getElementById("mingguLalu").style.display = "block";
-					document.getElementById("bulanIni").style.display = "none";
-					document.getElementById("bulanLalu").style.display = "none";
-					document.getElementById("tahunIni").style.display = "none";
-					document.getElementById("periode").style.display = "block";
-				} else if (idArea == "bulanini") {
-					document.getElementById("mingguIni").style.display = "none";
-					document.getElementById("mingguLalu").style.display = "none";
-					document.getElementById("bulanIni").style.display = "block";
-					document.getElementById("bulanLalu").style.display = "none";
-					document.getElementById("tahunIni").style.display = "none";
-					document.getElementById("periode").style.display = "block";
-				} else if (idArea == "bulanlalu") {
-					document.getElementById("mingguIni").style.display = "none";
-					document.getElementById("mingguLalu").style.display = "none";
-					document.getElementById("bulanIni").style.display = "none";
-					document.getElementById("bulanLalu").style.display = "block";
-					document.getElementById("tahunIni").style.display = "none";
-					document.getElementById("periode").style.display = "block";
-				} else if (idArea == "tahunini") {
-					document.getElementById("mingguIni").style.display = "none";
-					document.getElementById("mingguLalu").style.display = "none";
-					document.getElementById("bulanIni").style.display = "none";
-					document.getElementById("bulanLalu").style.display = "none";
-					document.getElementById("tahunIni").style.display = "block";
-					document.getElementById("periode").style.display = "block";
-				} else {
+					if (idArea == "mingguini") {
+						document.getElementById("mingguIni").style.display = "block";
+						document.getElementById("mingguLalu").style.display = "none";
+						document.getElementById("bulanIni").style.display = "none";
+						document.getElementById("bulanLalu").style.display = "none";
+						document.getElementById("tahunIni").style.display = "none";
+						document.getElementById("periode").style.display = "block";
+					} else if (idArea == "minggulalu") {
+						document.getElementById("mingguIni").style.display = "none";
+						document.getElementById("mingguLalu").style.display = "block";
+						document.getElementById("bulanIni").style.display = "none";
+						document.getElementById("bulanLalu").style.display = "none";
+						document.getElementById("tahunIni").style.display = "none";
+						document.getElementById("periode").style.display = "block";
+					} else if (idArea == "bulanini") {
+						document.getElementById("mingguIni").style.display = "none";
+						document.getElementById("mingguLalu").style.display = "none";
+						document.getElementById("bulanIni").style.display = "block";
+						document.getElementById("bulanLalu").style.display = "none";
+						document.getElementById("tahunIni").style.display = "none";
+						document.getElementById("periode").style.display = "block";
+					} else if (idArea == "bulanlalu") {
+						document.getElementById("mingguIni").style.display = "none";
+						document.getElementById("mingguLalu").style.display = "none";
+						document.getElementById("bulanIni").style.display = "none";
+						document.getElementById("bulanLalu").style.display = "block";
+						document.getElementById("tahunIni").style.display = "none";
+						document.getElementById("periode").style.display = "block";
+					} else if (idArea == "tahunini") {
+						document.getElementById("mingguIni").style.display = "none";
+						document.getElementById("mingguLalu").style.display = "none";
+						document.getElementById("bulanIni").style.display = "none";
+						document.getElementById("bulanLalu").style.display = "none";
+						document.getElementById("tahunIni").style.display = "block";
+						document.getElementById("periode").style.display = "block";
+					} else {
 
-				}
-			})
-		});
-	</script>
-	<?php $this->load->view("admin/_admin/chart.php") ?>
+					}
+				})
+			});
+		</script>
+		<?php $this->load->view("admin/_admin/chart.php") ?>
 	</body>
-</html>
+	</html>

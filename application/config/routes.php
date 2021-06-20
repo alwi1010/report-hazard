@@ -49,22 +49,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['404_override'] = '';
-$route['translate_uri_dashes'] = FALSE;
-$route['send-email'] = 'email controller';
-$route['email'] = 'email controller/send';
+// Global Routes
+	$route['404_override'] = '';
+	$route['translate_uri_dashes'] = FALSE;
+	$route['send-email'] = 'email controller';
+	$route['email'] = 'email controller/send';
 
-// Controller Routes
+// Employee Controller Routes
+	$route['default_controller'] = 'employee2';
+	$route['form-report-hazard'] = 'employee2';
+	$route['report-hazard'] = 'employee2/report_hazard';
+	$route['show-data-dropdown'] = 'employee2/show_chained';
 
-$route['default_controller'] = 'employee2';
-$route['form-report-hazard'] = 'employee2';
-$route['report-hazard'] = 'employee2/report_hazard';
-$route['login-admin'] = 'loginadminsystem';
-$route['check-login-admin'] = 'loginadminsystem/login_action';
-$route['admin'] = 'adminsystem';
-$route['admin-logout'] = 'adminsystem/logout';
-$route['login-admin-st'] = 'loginadminst';
-$route['admin-st'] = 'adminst';
-$route['login-unit-st'] = 'loginunitst';
-$route['unit-st'] = 'unitst';
-$route['show-data-dropdown'] = 'employee2/show_chained';
+// Admin System Controller Routes
+	$route['login-admin'] = 'loginadminsystem';
+	$route['check-login-admin'] = 'loginadminsystem/login_action';
+	$route['admin'] = 'adminsystem';
+	$route['admin-data-in'] = 'adminsystem/incoming_data';
+	$route['admin-data-pending'] = 'adminsystem/pending_data';
+	$route['admin-progress-data'] = 'adminsystem/data_in_progress';
+	$route['admin-data-complete'] = 'adminsystem/data_complete';
+	$route['admin-history-data'] = 'adminsystem/history_data';
+	$route['admin-data-request'] = 'adminsystem/request_data';
+	$route['admin-logout'] = 'adminsystem/logout';
+
+// Admin Unit ST Controller Routes
+	$route['login-admin-st'] = 'loginadminst';
+	$route['admin-st'] = 'adminst';
+	$route['logout-admin-st'] = 'adminst/logout';
+
+// Employee Unit ST Controller Routes
+	$route['login-unit-st'] = 'loginunitst';
+	$route['unit-st'] = 'unitst';
+	$route['logout-unit-st'] = 'unitst/logout';
