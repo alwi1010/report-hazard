@@ -299,6 +299,73 @@
 					<!-- /.row -->
 				</div>
 				<!-- /.container-fluid -->
+
+				<div class="container-fluid">
+					<!-- Main content -->
+					<section class="content">
+						<div class="row">
+							<div class="col-12">
+								<div class="card">
+									<div class="card-header">
+										<h3 class="card-title">Data Request</h3>
+									</div>
+									<!-- /.card-header -->
+									<div class="card-body">
+										<table id="example1" class="table table-bordered table-striped">
+											<thead>
+												<tr>
+													<th>No.</th>
+													<th>Nomor Masalah</th>
+													<th>Nama Request</th>
+													<th>Detail Request</th>
+													<th></th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php
+												if (!empty($data_request)) {
+													$no = 1;
+													foreach ($data_request as $isi_data_request):
+														$nomormasalah = $isi_data_request->NoMasalah;
+														$bytes = openssl_random_pseudo_bytes(26, $cstrong);
+														$hex   = bin2hex($bytes);
+														$plaintext = $nomormasalah.'?'.$hex;
+														$token = base64_encode($plaintext); ?>
+														<tr>
+															<td><?php echo $no++?></td>
+															<td>
+																<?php echo $isi_data_request->NoMasalah ?>
+															</td>
+															<td>
+																<?php echo $isi_data_request->NamaRequest ?>
+															</td>
+															<td>
+																<?php echo $isi_data_request->DetailRequest ?>
+															</td>
+															<td>
+																<a href="<?php echo base_url("admin/detail/$token") ?>" class="breadcrumb-item"><i class="fas fa-info-circle "></i> Detail</a>
+															</td>
+														</tr>
+														<?php 
+													endforeach; 
+												} else { ?>
+													<tr>
+														<td colspan="6" style="text-align: center;">Belum Ada Request Masuk!</td>
+													</tr>
+													<?php
+												}
+												?>
+											</tbody>
+										</table>
+									</div>
+									<!-- /.card-body -->
+								</div>
+								<!-- /.card -->
+							</div>
+						</div>
+					</section>
+				</div>
+				<!-- /.container-fluid -->
 			</section>
 			<!-- /.content -->
 		</div>
@@ -314,47 +381,47 @@
 		$(document).ready(function() {
 			$('#periodedata').on('change', function() {
 				var idArea = $('#periodedata').val();
-					if (idArea == "mingguini") {
-						document.getElementById("mingguIni").style.display = "block";
-						document.getElementById("mingguLalu").style.display = "none";
-						document.getElementById("bulanIni").style.display = "none";
-						document.getElementById("bulanLalu").style.display = "none";
-						document.getElementById("tahunIni").style.display = "none";
-						document.getElementById("periode").style.display = "block";
-					} else if (idArea == "minggulalu") {
-						document.getElementById("mingguIni").style.display = "none";
-						document.getElementById("mingguLalu").style.display = "block";
-						document.getElementById("bulanIni").style.display = "none";
-						document.getElementById("bulanLalu").style.display = "none";
-						document.getElementById("tahunIni").style.display = "none";
-						document.getElementById("periode").style.display = "block";
-					} else if (idArea == "bulanini") {
-						document.getElementById("mingguIni").style.display = "none";
-						document.getElementById("mingguLalu").style.display = "none";
-						document.getElementById("bulanIni").style.display = "block";
-						document.getElementById("bulanLalu").style.display = "none";
-						document.getElementById("tahunIni").style.display = "none";
-						document.getElementById("periode").style.display = "block";
-					} else if (idArea == "bulanlalu") {
-						document.getElementById("mingguIni").style.display = "none";
-						document.getElementById("mingguLalu").style.display = "none";
-						document.getElementById("bulanIni").style.display = "none";
-						document.getElementById("bulanLalu").style.display = "block";
-						document.getElementById("tahunIni").style.display = "none";
-						document.getElementById("periode").style.display = "block";
-					} else if (idArea == "tahunini") {
-						document.getElementById("mingguIni").style.display = "none";
-						document.getElementById("mingguLalu").style.display = "none";
-						document.getElementById("bulanIni").style.display = "none";
-						document.getElementById("bulanLalu").style.display = "none";
-						document.getElementById("tahunIni").style.display = "block";
-						document.getElementById("periode").style.display = "block";
-					} else {
+				if (idArea == "mingguini") {
+					document.getElementById("mingguIni").style.display = "block";
+					document.getElementById("mingguLalu").style.display = "none";
+					document.getElementById("bulanIni").style.display = "none";
+					document.getElementById("bulanLalu").style.display = "none";
+					document.getElementById("tahunIni").style.display = "none";
+					document.getElementById("periode").style.display = "block";
+				} else if (idArea == "minggulalu") {
+					document.getElementById("mingguIni").style.display = "none";
+					document.getElementById("mingguLalu").style.display = "block";
+					document.getElementById("bulanIni").style.display = "none";
+					document.getElementById("bulanLalu").style.display = "none";
+					document.getElementById("tahunIni").style.display = "none";
+					document.getElementById("periode").style.display = "block";
+				} else if (idArea == "bulanini") {
+					document.getElementById("mingguIni").style.display = "none";
+					document.getElementById("mingguLalu").style.display = "none";
+					document.getElementById("bulanIni").style.display = "block";
+					document.getElementById("bulanLalu").style.display = "none";
+					document.getElementById("tahunIni").style.display = "none";
+					document.getElementById("periode").style.display = "block";
+				} else if (idArea == "bulanlalu") {
+					document.getElementById("mingguIni").style.display = "none";
+					document.getElementById("mingguLalu").style.display = "none";
+					document.getElementById("bulanIni").style.display = "none";
+					document.getElementById("bulanLalu").style.display = "block";
+					document.getElementById("tahunIni").style.display = "none";
+					document.getElementById("periode").style.display = "block";
+				} else if (idArea == "tahunini") {
+					document.getElementById("mingguIni").style.display = "none";
+					document.getElementById("mingguLalu").style.display = "none";
+					document.getElementById("bulanIni").style.display = "none";
+					document.getElementById("bulanLalu").style.display = "none";
+					document.getElementById("tahunIni").style.display = "block";
+					document.getElementById("periode").style.display = "block";
+				} else {
 
-					}
-				})
-			});
-		</script>
-		<?php $this->load->view("admin/_admin/chart.php") ?>
-	</body>
-	</html>
+				}
+			})
+		});
+	</script>
+	<?php $this->load->view("admin/_admin/chart.php") ?>
+</body>
+</html>
