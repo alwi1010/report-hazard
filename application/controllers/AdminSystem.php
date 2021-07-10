@@ -26,12 +26,41 @@ class AdminSystem extends CI_Controller{
 		$this->load->view('admin/dashboard', $data);
 	}
 
+	// Main Pages Start
 
-	public function incoming_data(){
-		$this->load->model('m_data');
+		public function incoming_data(){
+			$this->load->model('m_data');
 
-		$this->load->view('admin/incoming_problem_data');
-	}
+			$this->load->view('admin/incoming_problem_data');
+		}
+
+	// Main Pages End
+
+	// Start Detail Pages
+
+		function details($token=NULL){
+				echo "<pre>";
+				print_r($token);
+				echo "</pre>"; die();
+			if (isset($token)):
+				$encode = base64_decode($token);
+				$pecah = explode("?", $encode);
+	      $IdMasalah = $pecah[0];
+
+				$data['incoming_data'] = $this->m_data->incoming_problem_data();
+				$data['pending_data'] = $this->m_data->pending_problem_data();
+				$data['data_in_progress'] = $this->m_data->problem_data_in_progress();
+				$data['data_complete'] = $this->m_data->complete_problem_data();
+				$data['history_data'] = $this->m_data->history_problem_data();
+				$data['data_request'] = $this->m_data->data_request();
+
+				$this->load->view('report_details', $data);
+			else:
+				$this->load->view('errors/html/error_403');
+			endif;
+		}
+
+	// End Detail Pages
 
 	// Lain Lain
 		function logout(){
